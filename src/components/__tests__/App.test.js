@@ -4,13 +4,14 @@ import App from 'components/App';
 import CommentBox from 'components/CommentBox';
 import CommentList from 'components/CommentList';
 
-const wrapped = shallow(<App />);
-/**
- * wrapped para indicar que estamos trayendo es una
- * versión wrapped de App. Así pues wrapped es un
- * component, por lo que también sería valido llamarlo
- * 'component'
- */
+let wrapped;
+
+beforeEach(() => {
+  // beforeEach is a global function
+  // Se ejecuta antes de los it de ESTE archivo.
+  wrapped = shallow(<App />);
+});
+
 it('shows a comment box', () => {
   expect(wrapped.find(CommentBox).length).toEqual(1);
 });
