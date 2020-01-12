@@ -10,44 +10,28 @@ beforeEach(() => {
 
 afterEach(() => {
   wrapped.unmount();
-}); // Order execution: Third
+}); // Order execution: last
 
 it('has a text area and a button', () => {
   expect(wrapped.find('textarea').length).toEqual(1);
   expect(wrapped.find('button').length).toEqual(1);
-}); // Order execution: Second
-
-it('has a textarea that users can type in', () => {
-  //step 1. Find the textarea element
-  //step 2. Simulate a 'change' event in the element
-  wrapped.find('textarea').simulate('change', {
-    // el evento se refiere al contexto HTML, no al de jsx.
-    target: { value: 'new comment' }
-  });
-  // target hace referencia a e.target.value
-  // Es como si lanzaramos el evento dentro del cual
-  // se le da el value 'new comment'. Esto para evaluar
-  // el evento del textare (simulate the event)
-
-  /**
-   * Ahora es necesario forzar el render porque el render
-   * normal de react depende de la asincronía de setState({})
-   */
-  wrapped.update();
-
-  expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
 });
 
-it('when form is submited, textarea gets emptied', () => {
-  // primero verificamos que el submit se haga sin el textarea vacío
-  wrapped.find('textarea').simulate('change', {
-    target: { value: 'new comment' }
+describe('the text area', () => {
+  beforeEach(() => {
+    wrapped.find('textarea').simulate('change', {
+      target: { value: 'new comment' }
+    });
+    wrapped.update();
   });
 
-  wrapped.update();
+  it('has a textarea that users can type in', () => {
+    expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
+  });
 
-  // Ahora si procedemos a simular el submit del form
-  wrapped.find('form').simulate('submit');
-  wrapped.update();
-  expect(wrapped.find('textarea').prop('value')).toEqual('');
+  it('when form is submited, textarea gets emptied', () => {
+    wrapped.find('form').simulate('submit');
+    wrapped.update();
+    expect(wrapped.find('textarea').prop('value')).toEqual('');
+  });
 });
