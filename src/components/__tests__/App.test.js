@@ -1,24 +1,16 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { shallow } from 'enzyme'; // shallow render. See notebooks!
 import App from '../App';
+import CommentBox from '../CommentBox';
 
-/**
- * @param string
- * @param promise
- */
 it('shows a comment box', () => {
-  const div = document.createElement('div');
-
-  ReactDOM.render(<App />, div);
-
-  // Looks inside the div
-  // and checks to see if there is this exact string: 'Comment Box'
-  expect(div.innerHTML).toContain('Comment Box');
-
-  ReactDOM.unmountComponentAtNode(div);
-
+  const wrapped = shallow(<App />);
   /**
-   * Finalmente, cuando termine nuestro test, es necesario limpiar
-   * la memoria de estos "elementos HTML fantasmas"
+   * wrapped para indicar que estamos trayendo es una
+   * versión wrapped de App. Así pues wrapped es un
+   * component, por lo que también sería valido llamarlo
+   * 'component'
    */
+
+  expect(wrapped.find(CommentBox).length).toEqual(1);
 });
