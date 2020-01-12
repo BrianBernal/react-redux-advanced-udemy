@@ -7,20 +7,13 @@ import App from '../App';
  * @param promise
  */
 it('shows a comment box', () => {
-  const div = document.create('div');
-  /**
-   * Este div no se crea en un document de un browser
-   * sino en ReactDom (JSDOM)
-   */
+  const div = document.createElement('div');
+
   ReactDOM.render(<App />, div);
-  /**
-   * El renderizado de este div, en realidad no ocurre dentro de lo
-   * que se ejecuta en el navegador. Pero react "cree" que sí se
-   * ejecuta en el entorno de un navegador.
-   *
-   * De tal forma, se pretende darle realismo a las pruebas, sin que
-   * el performance se vea afectado
-   */
+
+  // Looks inside the div
+  // and checks to see if the CommentBox is there
+
   ReactDOM.unmountComponentAtNode(div);
 
   /**
