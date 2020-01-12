@@ -28,4 +28,12 @@ it('has a textarea that users can type in', () => {
   // Es como si lanzaramos el evento dentro del cual
   // se le da el value 'new comment'. Esto para evaluar
   // el evento del textare (simulate the event)
+
+  /**
+   * Ahora es necesario forzar el render porque el render
+   * normal de react depende de la asincronía de setState({})
+   */
+  wrapped.update();
+
+  expect(wrapped.find('textarea').prop('value')).toEqual('new comment');
 });
