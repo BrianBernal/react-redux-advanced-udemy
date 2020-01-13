@@ -1,16 +1,20 @@
 import React from 'react';
 import { mount } from 'enzyme';
 import CommentBox from 'components/CommentBox';
+import Root from 'Root';
 
 let wrapped;
 
 beforeEach(() => {
-  wrapped = mount(<CommentBox />); // wrapper = component
-}); // Order execution: First
+  wrapped = mount(
+    <Root>
+      <CommentBox />
+    </Root>);
+});
 
 afterEach(() => {
   wrapped.unmount();
-}); // Order execution: last
+});
 
 it('has a text area and a button', () => {
   expect(wrapped.find('textarea').length).toEqual(1);
